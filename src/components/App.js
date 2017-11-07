@@ -11,8 +11,16 @@ import IconButton from 'material-ui/IconButton';
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import MenuIcon from 'material-ui-icons/Menu';
-import Dialog from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
 import Slide from 'material-ui/transitions/Slide';
+import Tabs, { Tab } from 'material-ui/Tabs';
+
 
 let id = 0
 
@@ -31,6 +39,14 @@ const styles = {
     bottom: '25px',
     right: '25px'
   }, 
+  formContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    width: '48%',
+    marginRight: '2%'
+  },
 }
 
 const data = [
@@ -86,7 +102,57 @@ class App extends Component {
           onRequestClose={() => this.toggleDialog(false)}
           transition={Transition}
         >
-        Jere?
+        <DialogTitle>
+          Trade #137
+          <Typography type="subheading" gutterBottom>
+            07/11/2017
+          </Typography>
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              To subscribe to this website, please enter your email address here. We will send
+              updates occationally.
+            </DialogContentText>
+            <Paper style={{ width: "100%" }}>
+              <Tabs
+                value={this.state.value}
+                onChange={this.handleChange}
+                fullWidth
+                indicatorColor="primary"
+                textColor="primary"
+              >
+                <Tab label="Buy" style={{ maxWidth: "100%" }}/>
+                <Tab label="Sell" style={{ maxWidth: "100%" }}/>
+              </Tabs>
+            </Paper>
+            <form style={styles.formContainer} noValidate autoComplete="off">
+              <TextField
+                style={styles.textField}
+                autoFocus
+                margin="dense"
+                id="amount"
+                label="Amount"
+                type="number"
+                fullWidth
+              />
+              <TextField
+                style={styles.textField}
+                margin="dense"
+                id="name"
+                label="Email Address"
+                type="email"
+                fullWidth
+              />
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => this.toggleDialog(false)} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={() => this.toggleDialog(false)} color="primary">
+              Subscribe
+            </Button>
+          </DialogActions>
         </Dialog>
         <Paper>
           <Table>
@@ -110,7 +176,6 @@ class App extends Component {
             </TableBody>
           </Table>
         </Paper>
-        toggleDialog
         <Button fab color='accent'style={styles.fab} onClick={() => this.toggleDialog(true)} aria-label='add'>
           <AddIcon />
         </Button>
