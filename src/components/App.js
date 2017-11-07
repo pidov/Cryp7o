@@ -7,14 +7,30 @@ import AddIcon from 'material-ui-icons/Add'
 import SettingsIcon from 'material-ui-icons/Settings'
 import Paper from 'material-ui/Paper'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
+import IconButton from 'material-ui/IconButton';
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import MenuIcon from 'material-ui-icons/Menu';
+import Dialog from 'material-ui/Dialog';
+import Slide from 'material-ui/transitions/Slide';
 
 let id = 0
 
 function createData (coin, amount, price) {
   id += 1
   return { id, coin, amount, price }
+}
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
+
+const styles = {
+  fab: {
+    position: 'fixed',
+    bottom: '25px',
+    right: '25px'
+  }, 
 }
 
 const data = [
@@ -28,7 +44,10 @@ class App extends Component {
     super(props)
 
     this.state = {
-      drawer: false
+      drawer: false,
+      dialog: {
+        open: false
+      }
     }
 
     this.toggleDrawer = this.toggleDrawer.bind(this)
@@ -40,16 +59,35 @@ class App extends Component {
     })
   }
 
+  toggleDialog (open) {
+    this.setState({
+      'dialog': {
+        open
+      }
+    })
+  }
+
   render () {
     return (
       <div>
         <AppBar position='static'>
           <Toolbar>
+            <IconButton color="contrast" aria-label="Menu" onClick={() => this.toggleDrawer(true)}>
+              <MenuIcon />
+            </IconButton>
             <Typography type='title' color='inherit'>
               MyCrypotoFolio
             </Typography>
           </Toolbar>
         </AppBar>
+        <Dialog
+          fullScreen
+          open={this.state.dialog.open}
+          onRequestClose={() => this.toggleDialog(false)}
+          transition={Transition}
+        >
+        Jere?
+        </Dialog>
         <Paper>
           <Table>
             <TableHead>
@@ -72,10 +110,14 @@ class App extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <Button fab color='accent' aria-label='add' onClick={() => this.toggleDrawer(true)}>
+        toggleDialog
+        <Button fab color='accent'style={styles.fab} onClick={() => this.toggleDialog(true)} aria-label='add'>
           <AddIcon />
         </Button>
         <Drawer anchor="left" open={this.state.drawer} onRequestClose={() => this.toggleDrawer(false)}>
+          <IconButton onClick={() => this.toggleDrawer(false)}>
+            <MenuIcon />
+          </IconButton>
           <List style={{width: '300px'}}>
             <ListItem button>
               <ListItemIcon>
