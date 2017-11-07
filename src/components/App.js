@@ -7,20 +7,24 @@ import AddIcon from 'material-ui-icons/Add'
 import SettingsIcon from 'material-ui-icons/Settings'
 import Paper from 'material-ui/Paper'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
-import IconButton from 'material-ui/IconButton';
+import IconButton from 'material-ui/IconButton'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
-import MenuIcon from 'material-ui-icons/Menu';
-import TextField from 'material-ui/TextField';
+import MenuIcon from 'material-ui-icons/Menu'
+import TextField from 'material-ui/TextField'
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Slide from 'material-ui/transitions/Slide';
-import Tabs, { Tab } from 'material-ui/Tabs';
-
+  DialogTitle
+} from 'material-ui/Dialog'
+import Slide from 'material-ui/transitions/Slide'
+import Tabs, { Tab } from 'material-ui/Tabs'
+import Grid from 'material-ui/Grid'
+import { FormControl, FormHelperText } from 'material-ui/Form'
+import { MenuItem } from 'material-ui/Menu'
+import Select from 'material-ui/Select'
+import Input, { InputLabel } from 'material-ui/Input'
 
 let id = 0
 
@@ -29,8 +33,8 @@ function createData (coin, amount, price) {
   return { id, coin, amount, price }
 }
 
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
+function Transition (props) {
+  return <Slide direction="up" {...props} />
 }
 
 const styles = {
@@ -44,9 +48,8 @@ const styles = {
     flexWrap: 'wrap',
   },
   textField: {
-    width: '48%',
-    marginRight: '2%'
-  },
+    width: '100%%'
+  }
 }
 
 const data = [
@@ -60,6 +63,8 @@ class App extends Component {
     super(props)
 
     this.state = {
+      tabValue: 0,
+      exchange: 'kraken',
       drawer: false,
       dialog: {
         open: false
@@ -67,6 +72,13 @@ class App extends Component {
     }
 
     this.toggleDrawer = this.toggleDrawer.bind(this)
+    this.toggleDialog = this.toggleDialog.bind(this)
+    this.handleTabChange = this.handleTabChange.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this)
+  }
+
+  handleSelectChange = name => event => {
+    this.setState({ [name]: event.target.value });
   }
 
   toggleDrawer (open) {
@@ -80,6 +92,12 @@ class App extends Component {
       'dialog': {
         open
       }
+    })
+  }
+
+  handleTabChange (event, value) {
+    this.setState({
+      'tabValue': value
     })
   }
 
@@ -100,23 +118,15 @@ class App extends Component {
           fullScreen
           open={this.state.dialog.open}
           onRequestClose={() => this.toggleDialog(false)}
-          transition={Transition}
-        >
-        <DialogTitle>
-          Trade #137
-          <Typography type="subheading" gutterBottom>
-            07/11/2017
-          </Typography>
-        </DialogTitle>
+          transition={Transition}>
+          <DialogTitle>
+            Trade #137
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occationally.
-            </DialogContentText>
             <Paper style={{ width: "100%" }}>
               <Tabs
-                value={this.state.value}
-                onChange={this.handleChange}
+                value={this.state.tabValue}
+                onChange={this.handleTabChange}
                 fullWidth
                 indicatorColor="primary"
                 textColor="primary"
@@ -126,23 +136,65 @@ class App extends Component {
               </Tabs>
             </Paper>
             <form style={styles.formContainer} noValidate autoComplete="off">
-              <TextField
-                style={styles.textField}
-                autoFocus
-                margin="dense"
-                id="amount"
-                label="Amount"
-                type="number"
-                fullWidth
-              />
-              <TextField
-                style={styles.textField}
-                margin="dense"
-                id="name"
-                label="Email Address"
-                type="email"
-                fullWidth
-              />
+              <Grid container spacing={24} style={{flexGrow: 1}}>
+                <Grid item xs={4}>
+                  <TextField
+                    style={styles.textField}
+                    autoFocus
+                    margin="dense"
+                    id="amount"
+                    label="Amount"
+                    type="number"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    style={styles.textField}
+                    margin="dense"
+                    id="coin"
+                    label="Coin"
+                    type="text"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    style={styles.textField}
+                    margin="dense"
+                    id="currency"
+                    label="Currency"
+                    type="text"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <FormControl style={{width: "100%"}}>
+                    <InputLabel htmlFor="exchange-simple">Exchange</InputLabel>
+                    <Select
+                      value={this.state.exchange}
+                      onChange={this.handleSelectChange('exchange')}
+                      input={<Input id="exchange-simple" />}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={'kraken'}>Kraken</MenuItem>
+                      <MenuItem value={'bittrex'}>Bittrex</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    style={styles.textField}
+                    margin="dense"
+                    id="price"
+                    label="Price"
+                    type="text"
+                    fullWidth
+                  />
+                </Grid>
+              </Grid>
             </form>
           </DialogContent>
           <DialogActions>
@@ -188,7 +240,7 @@ class App extends Component {
               <ListItemIcon>
                 <SettingsIcon />
               </ListItemIcon>
-              <ListItemText primary="Inbox" />
+              <ListItemText primary='Settings' />
             </ListItem>
           </List>
         </Drawer>
