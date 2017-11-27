@@ -9,7 +9,7 @@ import Paper from 'material-ui/Paper'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import IconButton from 'material-ui/IconButton'
 import Drawer from 'material-ui/Drawer'
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import List, { ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import MenuIcon from 'material-ui-icons/Menu'
 import TextField from 'material-ui/TextField'
 import Dialog, {
@@ -25,6 +25,9 @@ import { FormControl, FormHelperText } from 'material-ui/Form'
 import { MenuItem } from 'material-ui/Menu'
 import Select from 'material-ui/Select'
 import Input, { InputLabel } from 'material-ui/Input'
+import 'cryptocoins-icons/webfont/cryptocoins.css'
+import Theme from './Theme'
+import CoinList from './CoinList'
 
 let id = 0
 
@@ -102,8 +105,22 @@ class App extends Component {
   }
 
   render () {
+    const coins = [{
+      ticker: 'BTC',
+      name: 'Bitcoin',
+      valuation: 630.3,
+      holdings: 0.01234,
+      price: 8174
+    }, {
+      ticker: 'LTC',
+      name: 'Litecoin',
+      valuation: 130.3,
+      holdings: 2.1234,
+      price: 70
+    }]
+
     return (
-      <div>
+      <Theme>
         <AppBar position='static'>
           <Toolbar>
             <IconButton color="contrast" aria-label="Menu" onClick={() => this.toggleDrawer(true)}>
@@ -114,6 +131,25 @@ class App extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
+        <Drawer anchor="left" open={this.state.drawer} onRequestClose={() => this.toggleDrawer(false)}>
+          <IconButton onClick={() => this.toggleDrawer(false)}>
+            <MenuIcon />
+          </IconButton>
+          <List style={{width: '300px'}}>
+            <ListItem button>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary='Settings' />
+            </ListItem>
+          </List>
+        </Drawer>
+        <Paper>
+          <CoinList items={coins} />
+        </Paper>
+        <Button fab color='accent'style={styles.fab} onClick={() => this.toggleDialog(true)} aria-label='add'>
+          <AddIcon />
+        </Button>
         <Dialog
           fullScreen
           open={this.state.dialog.open}
@@ -206,45 +242,7 @@ class App extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Coin</TableCell>
-                <TableCell numeric>Amount</TableCell>
-                <TableCell numeric>Price</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map(n => {
-                return (
-                  <TableRow key={n.id}>
-                    <TableCell>{n.coin}</TableCell>
-                    <TableCell numeric>{n.amount}</TableCell>
-                    <TableCell numeric>{n.price}</TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </Paper>
-        <Button fab color='accent'style={styles.fab} onClick={() => this.toggleDialog(true)} aria-label='add'>
-          <AddIcon />
-        </Button>
-        <Drawer anchor="left" open={this.state.drawer} onRequestClose={() => this.toggleDrawer(false)}>
-          <IconButton onClick={() => this.toggleDrawer(false)}>
-            <MenuIcon />
-          </IconButton>
-          <List style={{width: '300px'}}>
-            <ListItem button>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText primary='Settings' />
-            </ListItem>
-          </List>
-        </Drawer>
-      </div>
+      </Theme>
     )
   }
 }
