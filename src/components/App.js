@@ -11,7 +11,6 @@ import IconButton from 'material-ui/IconButton'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import MenuIcon from 'material-ui-icons/Menu'
-import TextField from 'material-ui/TextField'
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -19,15 +18,11 @@ import Dialog, {
   DialogTitle
 } from 'material-ui/Dialog'
 import Slide from 'material-ui/transitions/Slide'
-import Tabs, { Tab } from 'material-ui/Tabs'
 import Grid from 'material-ui/Grid'
-import { FormControl, FormHelperText } from 'material-ui/Form'
-import { MenuItem } from 'material-ui/Menu'
-import Select from 'material-ui/Select'
-import Input, { InputLabel } from 'material-ui/Input'
 import 'cryptocoins-icons/webfont/cryptocoins.css'
 import Theme from './Theme'
 import CoinList from './CoinList'
+import TransactionForm from '../containers/TransactionForm'
 
 let id = 0
 
@@ -45,13 +40,6 @@ const styles = {
     position: 'fixed',
     bottom: '25px',
     right: '25px'
-  }, 
-  formContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    width: '100%%'
   }
 }
 
@@ -66,7 +54,6 @@ class App extends Component {
     super(props)
 
     this.state = {
-      tabValue: 0,
       exchange: 'kraken',
       drawer: false,
       dialog: {
@@ -76,12 +63,6 @@ class App extends Component {
 
     this.toggleDrawer = this.toggleDrawer.bind(this)
     this.toggleDialog = this.toggleDialog.bind(this)
-    this.handleTabChange = this.handleTabChange.bind(this)
-    this.handleSelectChange = this.handleSelectChange.bind(this)
-  }
-
-  handleSelectChange = name => event => {
-    this.setState({ [name]: event.target.value });
   }
 
   toggleDrawer (open) {
@@ -95,12 +76,6 @@ class App extends Component {
       'dialog': {
         open
       }
-    })
-  }
-
-  handleTabChange (event, value) {
-    this.setState({
-      'tabValue': value
     })
   }
 
@@ -159,79 +134,7 @@ class App extends Component {
             Trade #137
           </DialogTitle>
           <DialogContent>
-            <Paper style={{ width: "100%" }}>
-              <Tabs
-                value={this.state.tabValue}
-                onChange={this.handleTabChange}
-                fullWidth
-                indicatorColor="primary"
-                textColor="primary"
-              >
-                <Tab label="Buy" style={{ maxWidth: "100%" }}/>
-                <Tab label="Sell" style={{ maxWidth: "100%" }}/>
-              </Tabs>
-            </Paper>
-            <form style={styles.formContainer} noValidate autoComplete="off">
-              <Grid container spacing={24} style={{flexGrow: 1}}>
-                <Grid item xs={4}>
-                  <TextField
-                    style={styles.textField}
-                    autoFocus
-                    margin="dense"
-                    id="amount"
-                    label="Amount"
-                    type="number"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    style={styles.textField}
-                    margin="dense"
-                    id="coin"
-                    label="Coin"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    style={styles.textField}
-                    margin="dense"
-                    id="currency"
-                    label="Currency"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <FormControl style={{width: "100%"}}>
-                    <InputLabel htmlFor="exchange-simple">Exchange</InputLabel>
-                    <Select
-                      value={this.state.exchange}
-                      onChange={this.handleSelectChange('exchange')}
-                      input={<Input id="exchange-simple" />}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={'kraken'}>Kraken</MenuItem>
-                      <MenuItem value={'bittrex'}>Bittrex</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    style={styles.textField}
-                    margin="dense"
-                    id="price"
-                    label="Price"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
-            </form>
+            <TransactionForm />
           </DialogContent>
           <DialogActions>
             <Button onClick={() => this.toggleDialog(false)} color="primary">
