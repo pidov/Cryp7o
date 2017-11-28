@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
 import Paper from 'material-ui/Paper'
-import IconButton from 'material-ui/IconButton'
-import MenuIcon from 'material-ui-icons/Menu'
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -16,6 +11,7 @@ import Slide from 'material-ui/transitions/Slide'
 import 'cryptocoins-icons/webfont/cryptocoins.css'
 import Theme from './Theme'
 import CoinList from './CoinList'
+import AppBar from '../containers/AppBar'
 import TransactionForm from '../containers/TransactionForm'
 import Sidebar from '../containers/Sidebar'
 
@@ -78,16 +74,7 @@ class App extends Component {
 
     return (
       <Theme>
-        <AppBar position='static'>
-          <Toolbar>
-            <IconButton color="contrast" aria-label="Menu" onClick={() => this.toggleDrawer(true)}>
-              <MenuIcon />
-            </IconButton>
-            <Typography type='title' color='inherit'>
-              MyCrypotoFolio
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <AppBar onMenuItemClick={() => this.toggleDrawer(true)} />
         <Sidebar open={this.state.drawer} onRequestClose={() => this.toggleDrawer(false)} />
         <Paper>
           <CoinList items={coins} />
