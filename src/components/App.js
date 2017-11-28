@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Button from 'material-ui/Button'
-import AddIcon from 'material-ui-icons/Add'
 import Paper from 'material-ui/Paper'
 import Dialog, {
   DialogActions,
@@ -14,19 +13,11 @@ import CoinList from './CoinList'
 import AppBar from '../containers/AppBar'
 import TransactionForm from '../containers/TransactionForm'
 import Sidebar from '../containers/Sidebar'
+import Fab from '../containers/Fab'
 
 function Transition (props) {
   return <Slide direction="up" {...props} />
 }
-
-const styles = {
-  fab: {
-    position: 'fixed',
-    bottom: '25px',
-    right: '25px'
-  }
-}
-
 class App extends Component {
   constructor (props) {
     super(props)
@@ -79,9 +70,7 @@ class App extends Component {
         <Paper>
           <CoinList items={coins} />
         </Paper>
-        <Button fab color='accent'style={styles.fab} onClick={() => this.toggleDialog(true)} aria-label='add'>
-          <AddIcon />
-        </Button>
+        <Fab onClick={() => this.toggleDialog(true)} />
         <Dialog
           fullScreen
           open={this.state.dialog.open}
