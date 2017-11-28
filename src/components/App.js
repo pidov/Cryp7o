@@ -4,32 +4,20 @@ import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
-import SettingsIcon from 'material-ui-icons/Settings'
 import Paper from 'material-ui/Paper'
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import IconButton from 'material-ui/IconButton'
-import Drawer from 'material-ui/Drawer'
-import List, { ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import MenuIcon from 'material-ui-icons/Menu'
 import Dialog, {
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle
 } from 'material-ui/Dialog'
 import Slide from 'material-ui/transitions/Slide'
-import Grid from 'material-ui/Grid'
 import 'cryptocoins-icons/webfont/cryptocoins.css'
 import Theme from './Theme'
 import CoinList from './CoinList'
 import TransactionForm from '../containers/TransactionForm'
-
-let id = 0
-
-function createData (coin, amount, price) {
-  id += 1
-  return { id, coin, amount, price }
-}
+import Sidebar from '../containers/Sidebar'
 
 function Transition (props) {
   return <Slide direction="up" {...props} />
@@ -42,12 +30,6 @@ const styles = {
     right: '25px'
   }
 }
-
-const data = [
-  createData('Bitcoin', 159, 6.0),
-  createData('Ice cream sandwich', 237, 9.0),
-  createData('Eclair', 262, 16.0)
-]
 
 class App extends Component {
   constructor (props) {
@@ -106,19 +88,7 @@ class App extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Drawer anchor="left" open={this.state.drawer} onRequestClose={() => this.toggleDrawer(false)}>
-          <IconButton onClick={() => this.toggleDrawer(false)}>
-            <MenuIcon />
-          </IconButton>
-          <List style={{width: '300px'}}>
-            <ListItem button>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText primary='Settings' />
-            </ListItem>
-          </List>
-        </Drawer>
+        <Sidebar open={this.state.drawer} onRequestClose={() => this.toggleDrawer(false)} />
         <Paper>
           <CoinList items={coins} />
         </Paper>
