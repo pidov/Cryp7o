@@ -23,7 +23,6 @@ class App extends Component {
     super(props)
 
     this.state = {
-      exchange: 'kraken',
       drawer: false,
       dialog: {
         open: false

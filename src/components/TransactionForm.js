@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
-import { FormControl, FormHelperText } from 'material-ui/Form'
+import { FormControl } from 'material-ui/Form'
 import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
 import Input, { InputLabel } from 'material-ui/Input'
@@ -24,6 +23,7 @@ class TransactionForm extends Component {
     super(props)
 
     this.state = {
+      exchange: 'kraken',
       orderType: 0
     }
   }
@@ -34,8 +34,21 @@ class TransactionForm extends Component {
     })
   }
 
+  onSelectChange ({target}) {
+    const { value } = target
+    this.setState({
+      exchange: value
+    })
+  }
+
   render () {
-    const { onSelectChange } = this.props
+    const { onSelectChange } = this
+
+    const selectExchangeProps = { 
+      value: this.state.exchange,
+      onChange: onSelectChange.bind(this),
+      input: (<Input id="exchange-simple" />)
+    }
 
     return (
       <div>
@@ -87,11 +100,7 @@ class TransactionForm extends Component {
             <Grid item xs={4}>
               <FormControl style={{width: "100%"}}>
                 <InputLabel htmlFor="exchange-simple">Exchange</InputLabel>
-                <Select
-                  value={this.state.exchange}
-                  onChange={onSelectChange('exchange')}
-                  input={<Input id="exchange-simple" />}
-                >
+                <Select {...selectExchangeProps} >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>

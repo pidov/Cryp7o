@@ -9,8 +9,8 @@ class CoinList extends Component {
     return (
       <List>
         {items.map(({name, ticker, holdings, valuation, price}, index) => (
-          <ListItem button color='#fff'>
-            <CryptoIcon name={ticker} color='#fff'/>
+          <ListItem button color='#fff' key={ticker} >
+            <CryptoIcon name={ticker} color='#fff' />
             <ListItemText primary={`${name}`} secondary={`${holdings} @ $${price}`} />
             <ListItemSecondaryAction>
               <ListItemText primary={`${holdings * price}`} secondary='6.82% / 8% / 1%' />
