@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
-import CryptoIcon from './CryptoIcon'
+import CryptoIcon from 'components/CryptoIcon'
 
 class CoinList extends Component {
   render () {

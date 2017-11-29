@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import TransactionFormComponent from '../components/TransactionForm'
+import TransactionFormComponent from 'components/TransactionForm'
 
 class TransactionForm extends Component {
   constructor (props) {

@@ -8,17 +8,17 @@ import Dialog, {
   DialogTitle
 } from 'material-ui/Dialog'
 import Slide from 'material-ui/transitions/Slide'
-import 'cryptocoins-icons/webfont/cryptocoins.css'
-import Theme from './Theme'
-import CoinList from './CoinList'
-import AppBar from '../containers/AppBar'
-import TransactionForm from '../containers/TransactionForm'
-import Sidebar from '../containers/Sidebar'
-import Fab from '../containers/Fab'
+import Theme from 'components/Theme'
+import CoinList from 'components/CoinList'
+import AppBar from 'containers/AppBar'
+import TransactionForm from 'containers/TransactionForm'
+import Sidebar from 'containers/Sidebar'
+import Fab from 'containers/Fab'
 
 function Transition (props) {
   return <Slide direction="up" {...props} />
 }
+
 class App extends Component {
   constructor (props) {
     super(props)
