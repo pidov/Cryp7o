@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import autobind from 'react-autobind'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
@@ -21,6 +22,7 @@ const styles = {
 class TransactionForm extends Component {
   constructor (props) {
     super(props)
+    autobind(this)
 
     this.state = {
       exchange: 'kraken',
@@ -46,7 +48,7 @@ class TransactionForm extends Component {
 
     const selectExchangeProps = { 
       value: this.state.exchange,
-      onChange: onSelectChange.bind(this),
+      onChange: onSelectChange,
       input: (<Input id="exchange-simple" />)
     }
 

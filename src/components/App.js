@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import autobind from 'react-autobind'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Dialog, {
@@ -21,6 +22,7 @@ function Transition (props) {
 class App extends Component {
   constructor (props) {
     super(props)
+    autobind(this)
 
     this.state = {
       drawer: false,
@@ -28,9 +30,6 @@ class App extends Component {
         open: false
       }
     }
-
-    this.toggleDrawer = this.toggleDrawer.bind(this)
-    this.toggleDialog = this.toggleDialog.bind(this)
   }
 
   toggleDrawer (open) {
